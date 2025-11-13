@@ -2,6 +2,15 @@ spring:
   application:
     name: "gatewayserver"
 
+  cloud:
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+            lowerCaseServiceId: true
+  
   config:
     import: "optional:configserver:http://localhost:8071"
 
