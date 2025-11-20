@@ -4,10 +4,12 @@ spring:
 
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true
-  
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true
   config:
     import: "optional:configserver:http://localhost:8071"
 
@@ -24,7 +26,7 @@ management:
         include: "*"
   endpoint:
     gateway:
-      enabled: true
+      access: unrestricted
   info:
     env:
       enabled: true
