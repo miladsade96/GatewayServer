@@ -36,3 +36,9 @@ info:
     name: "gatewayserver"
     description: "Microservices API Gateway Server"
     version: "1.0.0"
+
+logging:
+  level:
+    tech:
+      miladsadeghi:
+        gatewayserver: DEBUG
