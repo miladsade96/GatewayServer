@@ -19,18 +19,6 @@ spring:
     username: "guest"
     password: "guest"
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    gateway:
-      access: unrestricted
-  info:
-    env:
-      enabled: true
-
 info:
   app:
     name: "gatewayserver"
@@ -42,3 +30,53 @@ logging:
     tech:
       miladsadeghi:
         gatewayserver: DEBUG
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        register-health-indicator: true
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        permitted-number-of-calls-in-half-open-state: 2
+        automatic-transition-from-open-to-half-open-enabled: true
+        wait-duration-in-open-state: 10s
+        failure-rate-threshold: 50
+        event-consumer-buffer-size: 10
+    instances:
+      accountsCircuitBreaker:
+        base-config: default
+      cardsCircuitBreaker:
+        base-config: default
+      loansCircuitBreaker:
+        base-config: default
+  timelimiter:
+    configs:
+      default:
+        timeout-duration: 5s
+        cancel-running-future: true
+    instances:
+      accountsCircuitBreaker:
+        base-config: default
+      cardsCircuitBreaker:
+        base-config: default
+      loansCircuitBreaker:
+        base-config: default
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    gateway:
+      access: unrestricted
+  info:
+    env:
+      enabled: true
