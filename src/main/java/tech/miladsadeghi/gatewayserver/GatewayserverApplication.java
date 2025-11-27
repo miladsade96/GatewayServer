@@ -43,6 +43,7 @@ public class GatewayserverApplication {
                                                     .add("X-Response-Time", LocalDateTime.now().toString());
                                             return Mono.just(body);
                                         })
+                                .circuitBreaker(config -> config.setName("cardsCircuitBreaker"))
                         )
                         .uri("lb://CARDS")
                 )
@@ -56,6 +57,7 @@ public class GatewayserverApplication {
                                                     .add("X-Response-Time", LocalDateTime.now().toString());
                                             return Mono.just(body);
                                         })
+                                .circuitBreaker(config -> config.setName("loansCircuitBreaker"))
                         )
                         .uri("lb://LOANS")
                 )
