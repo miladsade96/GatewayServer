@@ -12,7 +12,7 @@ spring:
               lower-case-service-id: true
           httpclient:
             connect-timeout: 1000
-            response-timeout: 5000ms
+            response-timeout: 10s
   config:
     import: "optional:configserver:http://localhost:8071"
 
